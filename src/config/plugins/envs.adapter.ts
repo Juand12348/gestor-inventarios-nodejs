@@ -3,5 +3,6 @@ import { get } from 'env-var';
 
 export const envs = {
     PORT: get('PORT').required().asPortNumber(),
-    NODE_ENV: get('NODE_ENV').default('development').asString()
+    NODE_ENV: get('NODE_ENV').default('development').asString(),
+    JWT_SEED: get('JWT_SEED').required().asString()
 }

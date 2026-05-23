@@ -3,7 +3,7 @@ import { regularExps } from "../../../config/plugins/regular-expresions";
 
 export class LoginUserDto {
 
-    constructor(
+    private constructor(
         public readonly email: string,
         public readonly password: string
     ){}

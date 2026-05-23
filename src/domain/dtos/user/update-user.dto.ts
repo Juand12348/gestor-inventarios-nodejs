@@ -3,7 +3,7 @@ import { regularExps } from "../../../config/plugins/regular-expresions";
 
 export class UpdateUserDto {
 
-    constructor(
+    private constructor(
         public readonly name?: string,
         public readonly email?: string,
         public readonly password?: string,

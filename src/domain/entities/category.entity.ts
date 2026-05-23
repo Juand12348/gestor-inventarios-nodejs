@@ -70,19 +70,15 @@ export class CategoryEntity{
         }
 
         this.name = name;
+        this.updatedAt = new Date();
     }
 
     set availableValue(available: boolean){
         this.available = available;
+        this.updatedAt = new Date();
     }
 
-    set updatededAtValue(updatedAt: Date){
-        if(updatedAt && !(updatedAt instanceof Date)){
-            throw new Error('CreatedAt not valid');
-        }
-
-        this.updatedAt = updatedAt;
-    }
+    
 
 
 }

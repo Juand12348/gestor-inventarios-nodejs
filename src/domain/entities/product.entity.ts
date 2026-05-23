@@ -1,4 +1,5 @@
-import { CategoryIdEntity } from "./categoryId.entity";
+import { CategoryEntity } from "./category.entity";
+import { UserEntity } from "./user.entity";
 
 
 export interface ProductOptions{
@@ -8,7 +9,9 @@ export interface ProductOptions{
     description: string;
     price: number;
     stock: number;
-    categoryId: CategoryIdEntity;
+    available: boolean;
+    category: CategoryEntity;
+    user: UserEntity;
     createdAt?: Date;
     updatedAt?: Date;
 
@@ -22,55 +25,28 @@ export class ProductEntity {
     private description: string;
     private price: number;
     private stock: number;
-    private categoryId: CategoryIdEntity;
+    private available: boolean;
+    private category: CategoryEntity;
+    private readonly user: UserEntity;
     private readonly createdAt: Date;
     private updatedAt: Date;
 
     constructor(options : ProductOptions ){
 
-        const {id, name, description, price, stock, categoryId, createdAt, updatedAt} = options;
+        const {id, name, description, price, stock, available,category, user,createdAt, updatedAt} = options;
         
         if (!id?.trim()) {
             throw new Error('Id not valid');
         }
-
-        if (!name?.trim()) {
-            throw new Error('Name not valid');
-        }
-
-        if (!description?.trim()) {
-            throw new Error('Description not valid');
-        }
-
-        if (price === null || price === undefined || price < 0) {
-            throw new Error('Price not valid');
-        }
-
-        if (stock === null || stock === undefined || stock < 0) {
-            throw new Error('Stock not valid');
-        }
-
-        if(!(categoryId instanceof CategoryIdEntity)){
-            throw new Error('CategoryId not valid');
-        }
-
-        if (createdAt && !(createdAt instanceof Date)) {
-            throw new Error('createdAt must be a Date');
-        }
-
-        if (updatedAt && !(updatedAt instanceof Date)) {
-            throw new Error('updatedAt must be a Date');
-        }
-        
-        
-        
 
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.stock = stock;
-        this.categoryId = categoryId;
+        this.available = available;
+        this.category = category;
+        this.user = user;
         this.createdAt = createdAt ?? new Date();
         this.updatedAt = updatedAt ?? new Date();
 
@@ -97,8 +73,16 @@ export class ProductEntity {
         return this.stock;
     }
 
-    get categoryIdValue():CategoryIdEntity{
-        return this.categoryId;
+    get availableValue():boolean{
+        return this.available;
+    }
+
+    get categoryValue():CategoryEntity{
+        return this.category;
+    }
+
+    get userValue():UserEntity{
+        return this.user;
     }
 
     get createdAtValue():Date{
@@ -141,14 +125,16 @@ export class ProductEntity {
         this.stock = stock;
     }
 
+    set availableValue(available: boolean){
+        this.available = available;
+
+    }
+
     set updatedAtValue(updatedAt: Date){
         if (updatedAt && !(updatedAt instanceof Date)) {
             throw new Error('updatedAt must be a Date');
         }
         this.updatedAt = updatedAt;
     }
-
-    
-
     
 }

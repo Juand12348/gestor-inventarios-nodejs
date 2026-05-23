@@ -80,8 +80,6 @@ export class UserEntity{
              throw new Error('Email not valid');
         }
 
-        const emailStructure =  /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-
         if(!UserEntity.EMAIL_REGEX.test(email)){
              throw new Error('Email not valid');
         }

@@ -1,44 +1,38 @@
+import { UserEntity } from "./user.entity";
 
-export interface CategoryIdEntityOptions{
+export interface CategoryEntityOptions{
 
     id: string;
     name: string;
+    available: boolean;
+    user: UserEntity;
     createdAt?: Date;
     updatedAt?: Date;
 
 }
 
-export class CategoryIdEntity{
+export class CategoryEntity{
 
     private readonly id: string;
     private name: string;
+    private available: boolean;
+    private readonly user: UserEntity;
     private readonly createdAt: Date;
     private updatedAt: Date;
 
-    constructor(options: CategoryIdEntityOptions){
+    constructor(options: CategoryEntityOptions){
 
-        const {id, name, createdAt, updatedAt} = options;
+        const {id, name, available = false ,  user,createdAt, updatedAt} = options;
 
         if(!id?.trim()){
             throw new Error('Id not valid');
         }
 
-        if(!name?.trim()){
-            throw new Error('Name not valid');
-        }
-
-
-        if(createdAt && !(createdAt instanceof Date)){
-            throw new Error('CreatedAt not valid');
-        }
-
-        if(updatedAt && !(updatedAt instanceof Date)){
-            throw new Error('UpdatedAt not valid');
-        }
-
 
         this.id = id;
         this.name = name;
+        this.available = available;
+        this.user = user;
         this.createdAt = createdAt ?? new Date();
         this.updatedAt = updatedAt ?? new Date();
 
@@ -52,6 +46,14 @@ export class CategoryIdEntity{
 
     get nameValue():string{
         return this.name;
+    }
+
+    get availableValue():boolean{
+        return this.available;
+    }
+
+    get userValue():UserEntity{
+        return this.user;
     }
 
     get createdAtValue():Date{
@@ -68,6 +70,10 @@ export class CategoryIdEntity{
         }
 
         this.name = name;
+    }
+
+    set availableValue(available: boolean){
+        this.available = available;
     }
 
     set updatededAtValue(updatedAt: Date){

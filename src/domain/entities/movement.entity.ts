@@ -29,26 +29,6 @@ export class MovementEntity {
             throw new Error('Id not valid');
         }
 
-        if (!productId?.trim()) {
-            throw new Error('ProductId not valid');
-        }
-
-        if (!userId?.trim()) {
-            throw new Error('UserId not valid');
-        }
-
-        if (type !== MovementType.IN && type !== MovementType.OUT) {
-            throw new Error('Type not valid');
-        }
-
-        if (quantity === null || quantity === undefined || quantity <= 0) {
-            throw new Error('Quantity must be greater than 0');
-        }
-
-        if (date && !(date instanceof Date)) {
-            throw new Error('Date not valid');
-        }
-
         this.id = id;
         this.productId = productId;
         this.type = type;

@@ -22,7 +22,7 @@ export class UpdateCategoryDto{
         }
 
         if(name !== undefined){
-            if(!name?.trim()) return ['Name invalid']; 
+            if(!(typeof name === 'string') && !name?.trim()) return ['Name invalid']; 
         }
 
         if(available !== undefined){
@@ -40,7 +40,7 @@ export class UpdateCategoryDto{
             }
         }
 
-        if(!userId?.trim()){
+        if(!(typeof userId === 'string') && !userId?.trim()){
             return ['User invalid'];
         }
 

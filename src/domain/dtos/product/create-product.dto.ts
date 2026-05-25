@@ -30,10 +30,10 @@ export class CreateProductDto{
             return ['No data provider']
         }
 
-        if(!name?.trim()) return ['Name invalid'];
-        if(!description?.trim()) return ['Description invalid'];
-        if(price < 0) return ['Price invalid'];
-        if(stock < 0) return ['Price invalid'];
+        if(!(typeof name === 'string') && !name?.trim()) return ['Name invalid'];
+        if(!(typeof description === 'string') && !description?.trim()) return ['Description invalid'];
+        if(!(typeof price === 'number') ||price < 0) return ['Price invalid'];
+        if(!(typeof stock === 'number') ||stock < 0) return ['Price invalid'];
         
         if(typeof available !== 'boolean'){
             if(available === 'true'){
@@ -45,11 +45,11 @@ export class CreateProductDto{
             }
         }
 
-        if(!categoryId?.trim()){
+        if(!(typeof categoryId === 'string') && !categoryId?.trim()){
             return ['Category invalid'];
         }
 
-        if(!userId?.trim()){
+        if(!(typeof categoryId === 'string') && !userId?.trim()){
             return ['User inavlid'];
         }
 

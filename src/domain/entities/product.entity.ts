@@ -1,6 +1,3 @@
-import { CategoryEntity } from "./category.entity";
-import { UserEntity } from "./user.entity";
-
 
 export interface ProductOptions{
 
@@ -10,8 +7,8 @@ export interface ProductOptions{
     price: number;
     stock: number;
     available: boolean;
-    category: CategoryEntity;
-    user: UserEntity;
+    categoryId: string;
+    userId: string;
     createdAt?: Date;
     updatedAt?: Date;
 
@@ -26,14 +23,14 @@ export class ProductEntity {
     private price: number;
     private stock: number;
     private available: boolean;
-    private category: CategoryEntity;
-    private readonly user: UserEntity;
+    private categoryId: string;
+    private readonly userId: string;
     private readonly createdAt: Date;
     private updatedAt: Date;
 
     constructor(options : ProductOptions ){
 
-        const {id, name, description, price, stock, available,category, user,createdAt, updatedAt} = options;
+        const {id, name, description, price, stock, available,categoryId, userId,createdAt, updatedAt} = options;
         
         if (!id?.trim()) {
             throw new Error('Id not valid');
@@ -45,8 +42,8 @@ export class ProductEntity {
         this.price = price;
         this.stock = stock;
         this.available = available;
-        this.category = category;
-        this.user = user;
+        this.categoryId = categoryId;
+        this.userId = userId;
         this.createdAt = createdAt ?? new Date();
         this.updatedAt = updatedAt ?? new Date();
 
@@ -77,12 +74,12 @@ export class ProductEntity {
         return this.available;
     }
 
-    get categoryValue():CategoryEntity{
-        return this.category;
+    get categoryValue():string{
+        return this.categoryId;
     }
 
-    get userValue():UserEntity{
-        return this.user;
+    get userValue():string{
+        return this.userId;
     }
 
     get createdAtValue():Date{

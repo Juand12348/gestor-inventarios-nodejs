@@ -7,6 +7,6 @@ export abstract class UserRepository{
     abstract getUserById(id: string):Promise<UserEntity | null>;
     abstract getUserByEmail(email: string):Promise<UserEntity | null>;
     abstract updateUser(id: string,updateUserDto: UpdateUserDto):Promise<UserEntity>;
-    abstract updateUser(id: string):Promise<boolean>;
+    abstract deleteUser(id: string):Promise<boolean>;
 
 }

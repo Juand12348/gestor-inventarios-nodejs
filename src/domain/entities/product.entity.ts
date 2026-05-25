@@ -99,6 +99,7 @@ export class ProductEntity {
         }
 
         this.name = name;
+        this.updatedAt = new Date();
     }
 
     set descriptionValue(description: string){
@@ -107,6 +108,7 @@ export class ProductEntity {
         }
 
         this.description = description;
+        this.updatedAt = new Date();
     }
     
     set priceValue(price: number){
@@ -115,6 +117,7 @@ export class ProductEntity {
         }
 
         this.price = price;
+        this.updatedAt = new Date();
     }
 
     set stockValue(stock: number){
@@ -123,18 +126,16 @@ export class ProductEntity {
         }
 
         this.stock = stock;
+        this.updatedAt = new Date();
     }
 
     set availableValue(available: boolean){
         this.available = available;
 
+        this.updatedAt = new Date();
+
     }
 
-    set updatedAtValue(updatedAt: Date){
-        if (updatedAt && !(updatedAt instanceof Date)) {
-            throw new Error('updatedAt must be a Date');
-        }
-        this.updatedAt = updatedAt;
-    }
+    
     
 }

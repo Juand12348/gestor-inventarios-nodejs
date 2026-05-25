@@ -13,6 +13,14 @@ export class RegisterUserDto {
 
         const { name, email, password } = object;
 
+        if (
+            name === undefined &&
+            email === undefined &&
+            password === undefined
+        ) {
+            return ['No data provided'];
+        }
+
         if(!name?.trim()) return ['Name not valid'];
         if(!email?.trim()) return ['Email not valid'];
         if(!regularExps.email.test(email)) return ['Email not valid'];

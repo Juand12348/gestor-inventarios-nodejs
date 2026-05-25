@@ -12,6 +12,13 @@ export class LoginUserDto {
 
         const {email, password} = object;
 
+        if (
+            email === undefined &&
+            password === undefined
+        ) {
+            return ['No data provided'];
+        }
+
         if(!email?.trim()) return ['Email not valid'];
         if(!regularExps.email.test(password)) return ['Email not valid'];
         if(!password?.trim()) return ['Password not valid'];

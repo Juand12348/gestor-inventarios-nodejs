@@ -13,6 +13,14 @@ export class UpdateUserDto {
 
         const { name, email, password } = object;
 
+        if (
+            name === undefined &&
+            email === undefined &&
+            password === undefined
+        ) {
+            return ['No data provided'];
+        }
+
         if( name &&!name?.trim()) return ['Name not valid'];
         
         if(email){

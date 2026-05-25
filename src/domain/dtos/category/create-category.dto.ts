@@ -16,6 +16,10 @@ export class CreateCategoryDto{
         const { name, available, user } = object;
         let availableBoolean = available;
 
+        if(name === undefined && available === undefined && user === undefined){
+            return ['No date provider'];
+        }
+
         if(!name?.trim()) return ['Missing name'];
         if(!user) return ['Missing user']
         if(!(user instanceof UserEntity)) return ['User Invalid']

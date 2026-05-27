@@ -1,13 +1,16 @@
-import { CreateProductDto, UpdateProductDto } from "../../dtos";
 import { ProductEntity } from "../../entities/product.entity";
 
+export abstract class ProductDatasource {
 
-export abstract class ProductDatasource{
+    abstract getById(id: string): Promise<ProductEntity | null>;
 
-    abstract getProductById(id: string):Promise<ProductEntity | null>;
-    abstract getAllProduct(email: string):Promise<ProductEntity[] | null>;
-    abstract createProduct(createProductDto: CreateProductDto):Promise<ProductEntity | null>
-    abstract updateProduct(id: string,updateProductDto: UpdateProductDto):Promise<ProductEntity | null>;
-    abstract deleteProduct(id: string):Promise<boolean>;
+    abstract getAll(): Promise<ProductEntity[]>;
+
+    abstract getName(name: string):Promise<ProductEntity | null>;
+
+    abstract create(product: ProductEntity): Promise<ProductEntity>;
+
+    abstract update(id: string,product: ProductEntity): Promise<ProductEntity>;
+
 
 }

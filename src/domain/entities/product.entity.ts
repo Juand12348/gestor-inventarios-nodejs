@@ -8,7 +8,6 @@ export interface ProductOptions{
     stock: number;
     available: boolean;
     categoryId: string;
-    userId: string;
     createdAt?: Date;
     updatedAt?: Date;
 
@@ -24,13 +23,12 @@ export class ProductEntity {
     private stock: number;
     private available: boolean;
     private categoryId: string;
-    private readonly userId: string;
     private readonly createdAt: Date;
     private updatedAt: Date;
 
     constructor(options : ProductOptions ){
 
-        const {id, name, description, price, stock, available,categoryId, userId,createdAt, updatedAt} = options;
+        const {id, name, description, price, stock, available,categoryId, createdAt, updatedAt} = options;
         
         if (!id?.trim()) {
             throw new Error('Id not valid');
@@ -43,7 +41,6 @@ export class ProductEntity {
         this.stock = stock;
         this.available = available;
         this.categoryId = categoryId;
-        this.userId = userId;
         this.createdAt = createdAt ?? new Date();
         this.updatedAt = updatedAt ?? new Date();
 
@@ -74,13 +71,10 @@ export class ProductEntity {
         return this.available;
     }
 
-    get categoryValue():string{
+    get categoryIdValue():string{
         return this.categoryId;
     }
 
-    get userValue():string{
-        return this.userId;
-    }
 
     get createdAtValue():Date{
         return this.createdAt;
@@ -128,6 +122,13 @@ export class ProductEntity {
 
     set availableValue(available: boolean){
         this.available = available;
+
+        this.updatedAt = new Date();
+
+    }
+
+    set categoryIdValue(categoryId: string){
+        this.categoryId = categoryId;
 
         this.updatedAt = new Date();
 

@@ -4,7 +4,6 @@ export interface CategoryEntityOptions{
     id: string;
     name: string;
     available: boolean;
-    userId: string;
     createdAt?: Date;
     updatedAt?: Date;
 
@@ -15,13 +14,12 @@ export class CategoryEntity{
     private readonly id: string;
     private name: string;
     private available: boolean;
-    private readonly userId: string;
     private readonly createdAt: Date;
     private updatedAt: Date;
 
     constructor(options: CategoryEntityOptions){
 
-        const {id, name, available = false ,  userId ,createdAt, updatedAt} = options;
+        const {id, name, available = false ,createdAt, updatedAt} = options;
 
         if(!id?.trim()){
             throw new Error('Id not valid');
@@ -31,7 +29,6 @@ export class CategoryEntity{
         this.id = id;
         this.name = name;
         this.available = available;
-        this.userId = userId;
         this.createdAt = createdAt ?? new Date();
         this.updatedAt = updatedAt ?? new Date();
 
@@ -49,10 +46,6 @@ export class CategoryEntity{
 
     get availableValue():boolean{
         return this.available;
-    }
-
-    get userValue():string{
-        return this.userId;
     }
 
     get createdAtValue():Date{

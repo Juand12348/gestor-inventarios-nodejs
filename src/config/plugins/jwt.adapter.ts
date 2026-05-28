@@ -7,7 +7,7 @@ const JWT_SEED = envs.JWT_SEED;
 
 export const JwtAdapter = {
 
-    async generarToken(payload: any, duration: StringValue = '2h'):Promise<string | null>{
+    async generateToken(payload: any, duration: StringValue = '2h'):Promise<string | null>{
 
         return new Promise((resolve) => {
 

@@ -3,9 +3,8 @@ import { UserEntity } from "../../entities/user.entity";
 
 export abstract class UserDatasource{
 
-    abstract getById(id: string):Promise<UserEntity | null>;
-    abstract getByEmail(email: string):Promise<UserEntity | null>;
+    abstract getById(id: string):Promise<UserEntity>;
+    abstract getByEmail(email: string):Promise<UserEntity>;
     abstract update(id: string,user: UserEntity):Promise<UserEntity>;
-    abstract delete(id: string):Promise<boolean>;
 
 }

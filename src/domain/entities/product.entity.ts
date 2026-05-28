@@ -1,3 +1,4 @@
+import { CustomError } from "../errors/custom.error";
 
 export interface ProductOptions{
 
@@ -133,6 +134,29 @@ export class ProductEntity {
         this.updatedAt = new Date();
 
     }
+
+    static fromObject(object: {[key: string]: any;}){
+    
+        const { id, _id,  name, description, price, stock, available,categoryId, createdAt, updatedAt } = object;
+    
+        if(!_id && !id){
+            throw CustomError.badRequest('Missing id');
+        }
+    
+        if(!name?.trim()) throw CustomError.badRequest('Missing name');
+        if(!description?.trim()) throw CustomError.badRequest('Missing description');
+        if(price === undefined) throw CustomError.badRequest('Missing price');
+        if(stock === undefined) throw CustomError.badRequest('Missing stock');
+        if(available === undefined) throw CustomError.badRequest('Missing available');
+        if(!categoryId) throw CustomError.badRequest('Missing categoryId');
+        if(createdAt === undefined) throw CustomError.badRequest('Missing createdAt');
+        if(updatedAt === undefined) throw CustomError.badRequest('Missing updatedAt');
+
+    
+        return new ProductEntity({id:_id || id, name, description, price, stock, available, categoryId, createdAt, updatedAt});
+    }   
+
+    
 
     
     

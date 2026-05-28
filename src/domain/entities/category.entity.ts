@@ -1,3 +1,4 @@
+import { CustomError } from "../errors/custom.error";
 
 export interface CategoryEntityOptions{
 
@@ -69,6 +70,23 @@ export class CategoryEntity{
         this.available = available;
         this.updatedAt = new Date();
     }
+
+
+    static execute(object: {[key: string]: any;}){
+    
+        const { id, _id, name, available ,createdAt, updatedAt } = object;
+    
+        if(!_id && !id){
+            throw CustomError.badRequest('Missing id');
+        }
+    
+        if(!name?.trim()) throw CustomError.badRequest('Missing name');
+        if(available === undefined) throw CustomError.badRequest('Missing available');
+        if(createdAt === undefined) throw CustomError.badRequest('Missing createdAt');
+        if(updatedAt === undefined) throw CustomError.badRequest('Missing uodatedAt');
+    
+        return new CategoryEntity({id:_id || id, name,available, createdAt, updatedAt});
+    }   
 
     
 

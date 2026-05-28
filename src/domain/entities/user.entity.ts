@@ -1,3 +1,4 @@
+import { CustomError } from "../errors/custom.error";
 
 export enum UserRole{
     ADMIN, EMPLOYED
@@ -12,6 +13,7 @@ export interface UserOptions{
     emailValidated: boolean;
     password: string;
     role: UserRole;
+    available: boolean;
 
 }
 
@@ -23,12 +25,13 @@ export class UserEntity{
     private emailValidated!: boolean;
     private password!: string;
     private role!: UserRole;
+    private available: boolean;
 
     private static readonly EMAIL_REGEX = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
 
     constructor(options: UserOptions) {
 
-        const { id, name, email, emailValidated, password, role } = options;
+        const { id, name, email, emailValidated, password, role, available } = options;
 
         if(!id?.trim()){
         throw new Error('Id not valid');
@@ -41,7 +44,8 @@ export class UserEntity{
         this.emailValidatedValue = emailValidated;
         this.passwordValue = password;
         this.roleValue = role;
-  }
+        this.available = available;
+    }
 
     get idValue():string{
         return this.id;
@@ -65,6 +69,10 @@ export class UserEntity{
 
     get roleValue():UserRole{
         return this.role;
+    }
+
+    get availableValue():boolean{
+        return this.available;
     }
 
     set nameValue(name: string){
@@ -111,4 +119,32 @@ export class UserEntity{
         }
         this.role = role;
     }
+
+    set availableValue(available: boolean){
+        if(typeof available !== 'boolean'){
+            throw new Error('Available invalid');
+        }
+
+        this.available = available;
+
+    }
+
+    static execute(object: {[key: string]: any;}){
+    
+            const { id, _id, name, email, emailValidated, password, role, available } = object;
+    
+            if(!_id && !id){
+                throw CustomError.badRequest('Missing id');
+            }
+    
+            if(!name?.trim()) throw CustomError.badRequest('Missing name');
+            if(!email) throw CustomError.badRequest('Missing email');
+            if(emailValidated === undefined) throw CustomError.badRequest('Missing emailValidated');
+            if(!password) throw CustomError.badRequest('Missing password');
+            if(role === undefined) throw CustomError.badRequest('Missing role');
+            if(available === undefined) throw CustomError.badRequest('Missing available')
+    
+            return new UserEntity({id:_id || id, name, email, emailValidated, password, role ,available});
+    }
+
 }

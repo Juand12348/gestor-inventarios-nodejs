@@ -72,7 +72,7 @@ export class CategoryEntity{
     }
 
 
-    static execute(object: {[key: string]: any;}){
+    static fromObject(object: {[key: string]: any;}){
     
         const { id, _id, name, available ,createdAt, updatedAt } = object;
     

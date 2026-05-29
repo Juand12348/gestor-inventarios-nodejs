@@ -129,7 +129,7 @@ export class UserEntity{
 
     }
 
-    static execute(object: {[key: string]: any;}){
+    static fromObject(object: {[key: string]: any;}){
     
             const { id, _id, name, email, emailValidated, password, role, available } = object;
     

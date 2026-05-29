@@ -12,20 +12,22 @@ export interface MovementOptions {
     productId: string;
     type: MovementType;
     quantity: number;
+    userId: string;
     date?: Date;
 }
 
 export class MovementEntity {
 
-    public readonly id: string;
-    public readonly productId: string;
-    public readonly type: MovementType;
-    public readonly quantity: number;
-    public readonly date: Date;
+    private readonly id: string;
+    private readonly productId: string;
+    private readonly type: MovementType;
+    private readonly quantity: number;
+    private readonly userId: string; 
+    private readonly date: Date;
 
     constructor(options: MovementOptions) {
 
-        const { id, productId, type, quantity, date} = options;
+        const { id, productId, type, quantity, userId,date} = options;
 
         if (!id?.trim()) {
             throw new Error('Id not valid');
@@ -35,6 +37,7 @@ export class MovementEntity {
         this.productId = productId;
         this.type = type;
         this.quantity = quantity;
+        this.userId = userId;
         this.date = date ?? new Date();
     }
 
@@ -54,13 +57,17 @@ export class MovementEntity {
         return this.quantity;
     }
 
+    get userIdValue():string{
+        return this.userId;
+    }
+
     get dateValue():Date{
         return this.date;
     }
 
-    static execute(object: {[key: string]: any;}){
+    static fromObject(object: {[key: string]: any;}){
     
-        const { id, _id, productId, type, quantity, date } = object;
+        const { id, _id, productId, type, quantity, userId,date } = object;
     
         if(!_id && !id){
             throw CustomError.badRequest('Missing id');
@@ -69,10 +76,11 @@ export class MovementEntity {
         if(!productId) throw CustomError.badRequest('Missing productId');
         if(type === undefined) throw CustomError.badRequest('Missing type');
         if(quantity === undefined) throw CustomError.badRequest('Missing quantity');
+        if(!userId?.trim()) throw CustomError.badRequest('Missing userId')
         if(date === undefined) throw CustomError.badRequest('Missing date');
 
     
-        return new MovementEntity({id:_id || id, productId, type, quantity, date});
+        return new MovementEntity({id:_id || id, productId, type, quantity, userId,date});
     }   
 
 

@@ -1,15 +1,29 @@
-import {Server} from './presentation/server';
+import { AppDataSource } from './data/data-source';
+import { Server } from './presentation/server';
 
 (() => {
     main();
 })();
 
+async function main() {
 
+    try {
 
-function main(){
+        await AppDataSource.initialize();
 
-    const server = new Server();
+        console.log('Database connected');
 
-    server.start();
+        const server = new Server();
+
+        server.start();
+
+    } catch (error) {
+
+        console.error('Database connection error');
+        console.error(error);
+
+        process.exit(1);
+
+    }
 
 }

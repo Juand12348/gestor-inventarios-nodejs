@@ -8,11 +8,12 @@ export class CreateMovementDto{
         public readonly productId: string,
         public readonly type: MovementType,
         public readonly quantity: number,
+        public readonly userId: string,
     ){}
 
     static create(object:{[key:string]:any}):[string?, CreateMovementDto?]{
 
-        const {productId, type, quantity} = object;
+        const {productId, type, quantity, userId} = object;
         let movementType;
 
         if(!(typeof productId === 'string') || !productId?.trim()){
@@ -35,10 +36,14 @@ export class CreateMovementDto{
             return ['Movement invalid'];
         }
 
+        if(!(typeof userId === 'string') || !userId?.trim()){
+            return ['userId invalid'];
+        }
+
         if( !(typeof quantity === 'number') || quantity < 0) return ['Quantity invalid'];
         
 
-        return [undefined, new CreateMovementDto(productId, movementType, quantity)];
+        return [undefined, new CreateMovementDto(productId, movementType, quantity, userId)];
         
 
 

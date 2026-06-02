@@ -1,10 +1,10 @@
 import { CustomError } from "../errors/custom.error";
 
 export enum MovementType {
-    PURCHASE,
-    SALE,
-    LOSS,
-    RETURN,
+    PURCHASE = 'PURCHASE',
+    SALE = 'SALE',
+    LOSS = 'LOSS',
+    RETURN = 'RETURN',
 }
 
 export interface MovementOptions {

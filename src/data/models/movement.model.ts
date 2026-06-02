@@ -7,16 +7,8 @@ import {
     PrimaryColumn,
 } from "typeorm";
 import { ProductModel } from "./product.model";
+import { MovementType } from "../../domain";
 
-
-export enum MovementTypeModel{
-
-    PURCHASE = 'PURCHASE',
-    SALE = 'SALE',
-    LOSS = 'LOSS',
-    RETURN = 'RETURN',
-
-}
 
 @Entity('movements')
 export class MovementModel {
@@ -30,9 +22,9 @@ export class MovementModel {
 
     @Column({
         type: 'enum',
-        enum: MovementTypeModel
+        enum: MovementType
     })
-    type!: MovementTypeModel;
+    type!: MovementType;
 
     @Column('integer')
     quantity!: number;

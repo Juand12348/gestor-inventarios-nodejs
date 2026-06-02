@@ -5,11 +5,8 @@ import {
     PrimaryColumn,
     UpdateDateColumn,
 } from "typeorm";
+import { UserRole } from "../../domain";
 
-export enum UserRoleModel {
-    ADMIN = 'ADMIN',
-    EMPLOYED = 'EMPLOYED'
-}
 
 @Entity('users')
 export class UserModel {
@@ -35,10 +32,10 @@ export class UserModel {
 
     @Column({
         type: 'enum',
-        enum: UserRoleModel,
-        default: UserRoleModel.EMPLOYED
+        enum: UserRole,
+        default: UserRole.EMPLOYED
     })
-    role!: UserRoleModel;
+    role!: UserRole;
 
     @Column('boolean', {
         default: true

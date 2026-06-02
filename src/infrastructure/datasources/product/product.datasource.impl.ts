@@ -1,7 +1,6 @@
 import { AppDataSource } from "../../../data/data-source";
 import { ProductModel } from "../../../data/models/product.model";
 import {
-    CustomError,
     ProductDatasource,
     ProductEntity,
 } from "../../../domain";
@@ -11,7 +10,7 @@ export class ProductDatasourceImpl implements ProductDatasource {
     private readonly repository =
         AppDataSource.getRepository(ProductModel);
 
-    async getById(id: string): Promise<ProductEntity> {
+    async getById(id: string): Promise<ProductEntity | null> {
 
         const product = await this.repository.findOne({
             where: { id },
@@ -21,7 +20,7 @@ export class ProductDatasourceImpl implements ProductDatasource {
         });
 
         if (!product) {
-            throw CustomError.notFound('Product not exists');
+            return null;
         }
 
         return ProductEntity.fromObject(product);
@@ -40,7 +39,7 @@ export class ProductDatasourceImpl implements ProductDatasource {
         );
     }
 
-    async getName(name: string): Promise<ProductEntity> {
+    async getName(name: string): Promise<ProductEntity | null> {
 
         const product = await this.repository.findOne({
             where: { name },
@@ -50,7 +49,7 @@ export class ProductDatasourceImpl implements ProductDatasource {
         });
 
         if (!product) {
-            throw CustomError.notFound('Product not exists');
+            return null
         }
 
         return ProductEntity.fromObject(product);
@@ -78,14 +77,14 @@ export class ProductDatasourceImpl implements ProductDatasource {
     async update(
         id: string,
         product: ProductEntity
-    ): Promise<ProductEntity> {
+    ): Promise<ProductEntity | null> {
 
         const model = await this.repository.findOne({
             where: { id },
         });
 
         if (!model) {
-            throw CustomError.notFound('Product not exists');
+            return null;
         }
 
         model.name = product.nameValue;

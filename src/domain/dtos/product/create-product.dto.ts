@@ -16,7 +16,7 @@ export class CreateProductDto{
     static create(object:{[key: string]: any}):[string?, CreateProductDto?]{
 
         const { name, description, price, stock, available, categoryId , userId} = object;
-        let availableBoolean;
+        let availableBoolean = false;
 
         if(
             name === undefined &&
@@ -30,7 +30,7 @@ export class CreateProductDto{
             return ['No data provider']
         }
 
-        if(!(typeof name === 'string') && !name?.trim()) return ['Name invalid'];
+        if(!(typeof name === 'string') || !name?.trim()) return ['Name invalid'];
         if(!(typeof description === 'string') && !description?.trim()) return ['Description invalid'];
         if(!(typeof price === 'number') ||price < 0) return ['Price invalid'];
         if(!(typeof stock === 'number') ||stock < 0) return ['Price invalid'];
@@ -39,7 +39,7 @@ export class CreateProductDto{
             if(available === 'true'){
                 availableBoolean = true;
             }else if(available === 'false'){
-                availableBoolean === false;
+                availableBoolean = false;
             }else{
                return ['Available invalid'];
             }
@@ -53,7 +53,7 @@ export class CreateProductDto{
             return ['User inavlid'];
         }
 
-        return [undefined, new CreateProductDto(name, description, price, stock, available, categoryId, userId)];
+        return [undefined, new CreateProductDto(name, description, price, stock, availableBoolean, categoryId, userId)];
 
 
     }

@@ -1,4 +1,6 @@
+import { envs } from './config';
 import { AppDataSource } from './data/data-source';
+import { AppRoutes } from './presentation/routes';
 import { Server } from './presentation/server';
 
 (() => {
@@ -13,7 +15,10 @@ async function main() {
 
         console.log('Database connected');
 
-        const server = new Server();
+        const server = new Server({
+            port: envs.PORT,
+            routes: AppRoutes.routes
+        });
 
         server.start();
 

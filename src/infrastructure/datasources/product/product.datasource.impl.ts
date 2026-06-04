@@ -1,14 +1,17 @@
-import { AppDataSource } from "../../../data/data-source";
 import { ProductModel } from "../../../data/models/product.model";
 import {
     ProductDatasource,
     ProductEntity,
 } from "../../../domain";
 
+import {Repository } from 'typeorm';
+
 export class ProductDatasourceImpl implements ProductDatasource {
 
-    private readonly repository =
-        AppDataSource.getRepository(ProductModel);
+    // private readonly repository =
+    //     AppDataSource.getRepository(ProductModel);
+
+    constructor(private readonly repository: Repository<ProductModel>){}
 
     async getById(id: string): Promise<ProductEntity | null> {
 

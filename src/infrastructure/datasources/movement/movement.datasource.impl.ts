@@ -1,4 +1,4 @@
-import { AppDataSource } from "../../../data/data-source";
+import { Repository } from "typeorm";
 import { MovementModel } from "../../../data/models/movement.model";
 import { MovementDatasource, MovementEntity, MovementType } from "../../../domain";
 
@@ -6,7 +6,7 @@ import { MovementDatasource, MovementEntity, MovementType } from "../../../domai
 
 export class MovementDatasourceImpl implements MovementDatasource{
     
-    private readonly repository = AppDataSource.getRepository(MovementModel); 
+    constructor(private readonly repository: Repository<MovementModel>){}
 
     async getById(id: string): Promise<MovementEntity | null> {
         const movement = await this.repository.findOne({

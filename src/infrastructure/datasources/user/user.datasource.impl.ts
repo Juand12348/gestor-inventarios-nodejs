@@ -1,10 +1,10 @@
-import { AppDataSource } from "../../../data/data-source";
+import { Repository } from "typeorm";
 import { UserModel } from "../../../data/models/user.model";
 import { UserDatasource, UserEntity } from "../../../domain";
 
 
 export class UserDatasourceImpl implements UserDatasource{
-    private readonly repository = AppDataSource.getRepository(UserModel);
+    constructor(private readonly repository: Repository<UserModel>){}
 
     async getById(id: string): Promise<UserEntity | null> {
         const user = await this.repository.findOne({

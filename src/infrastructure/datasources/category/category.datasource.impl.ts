@@ -1,10 +1,10 @@
-import { AppDataSource } from "../../../data/data-source";
+import { Repository } from "typeorm";
 import { CategoryModel } from "../../../data/models/category.model";
 import { CategoryDatasource, CategoryEntity} from "../../../domain";
 
 
 export class CategoryDatasourceImpl implements CategoryDatasource{
-    private readonly repository = AppDataSource.getRepository(CategoryModel);
+    constructor(private readonly repository: Repository<CategoryModel>){}
     
     async getById(id: string): Promise<CategoryEntity | null> {
         const category = await this.repository.findOne({

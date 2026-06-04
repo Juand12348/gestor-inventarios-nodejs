@@ -1,11 +1,11 @@
-import { AppDataSource } from "../../../data/data-source";
+import { Repository } from "typeorm";
 import { UserModel } from "../../../data/models/user.model";
 import { AuthUserDatasource, UserEntity } from "../../../domain";
 
 
 
 export class AuthUserDatasourceImpl implements AuthUserDatasource{
-    private readonly repository = AppDataSource.getRepository(UserModel);
+    constructor(private readonly repository: Repository<UserModel>){}
     
     async registerUser(userRegister: UserEntity): Promise<UserEntity | null> {
         const model = await this.repository.create({

@@ -38,7 +38,7 @@ export class UpdateProductDto{
             if(available === 'true'){
                 availableBoolean = true;
             }else if(available === 'false'){
-                availableBoolean === false;
+                availableBoolean = false;
             }else{
                return ['Available invalid'];
             }
@@ -52,7 +52,7 @@ export class UpdateProductDto{
             return ['User inavlid'];
         }
 
-        return [undefined, new UpdateProductDto(name, description, price, stock, available, categoryId, userId)];
+        return [undefined, new UpdateProductDto(name, description, price, stock, availableBoolean, categoryId, userId)];
 
 
     }

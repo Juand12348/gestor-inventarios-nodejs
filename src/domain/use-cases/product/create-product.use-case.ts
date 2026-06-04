@@ -27,6 +27,7 @@ export class CreateProductUseCase{
         const product = new ProductEntity({id, name, description, price, stock, available, categoryId} );
 
         const createdProduct = await this.productRepository.create(product);
+        if(!createdProduct) throw CustomError.internalServer('Intenal Server Error');
         
 
 

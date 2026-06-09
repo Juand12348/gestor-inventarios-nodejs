@@ -32,7 +32,6 @@ export class RegisterUserUseCase{
 
             // Encriptar constraseña
         user.passwordValue = bcryptAdapter.hash(password);
-
         const register = await this.authRepository.registerUser(user);
 
         return register;

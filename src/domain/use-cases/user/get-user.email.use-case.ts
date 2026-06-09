@@ -2,7 +2,7 @@ import { CustomError } from "../../errors/custom.error";
 import { UserRepository } from "../../repositories";
 
 
-export class GetUserNameUseCase{
+export class GetUserEmailUseCase{
 
     constructor(
         private readonly repository: UserRepository

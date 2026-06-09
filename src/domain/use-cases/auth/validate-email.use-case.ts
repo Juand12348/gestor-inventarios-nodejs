@@ -11,15 +11,9 @@ export class validateEmailUseCase{
     ){}
 
 
-    async execute(token: string){
+    async execute(email: string){
 
-        const payload = await JwtAdapter.validatedToken(token);
-        if(!payload ) throw CustomError.unauthorized('Invalid token');
-
-        const payloadData = payload as {email: string};
-        if(!payloadData.email) throw CustomError.internalServer('Email not in token');
-
-        const user = await this.userRepository.getByEmail(payloadData.email);
+        const user = await this.userRepository.getByEmail(email);
         if(!user) throw CustomError.notFound('Email not exists');
 
         user.emailValidatedValue = true;

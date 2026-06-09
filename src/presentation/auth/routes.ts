@@ -1,6 +1,8 @@
 import { Router } from "express";
-import { AuthConstroller } from "./controller";
+import { AuthController } from "./controller";
 import { AuthService } from "../services/auth.service";
+import { EmailService } from "../services/email.service";
+import { envs } from "../../config";
 
 
 export class AuthRoutes{
@@ -9,12 +11,18 @@ export class AuthRoutes{
 
         const router = Router();
 
-        const authService = new AuthService();
-        const controller = new AuthConstroller(authService);
+        const emailService = new EmailService(
+            envs.MAILER_SERVICE,
+            envs.MAILER_EMAIL,
+            envs.MAILER_SECRET_KEY,
+            envs.SEND_EMAIL
+        );
+        const authService = new AuthService(emailService);
+        const controller = new AuthController(authService);
 
         router.post('/login', controller.loginUser);
         router.post('/register', controller.registerUser);
-        router.post('/validate-email', controller.validatedUser);
+        router.get('/validate-email/:token', controller.validatedUser);
 
 
 

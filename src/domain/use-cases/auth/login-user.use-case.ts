@@ -21,12 +21,7 @@ export class LoginUserUseCase{
         const hasMatch = bcryptAdapter.compare(password, user.passwordValue);
         if(!hasMatch) throw CustomError.badRequest('Invalid credentials');
 
-        const token = await JwtAdapter.generateToken({id: user.idValue});
-        if(!token) throw CustomError.internalServer('Error while creating JWT');
-
-        return {
-            user, token
-        };
+        return user;
 
 
     }

@@ -8,20 +8,18 @@ export class CreateCategoryDto{
     private constructor(
         public readonly name: string,
         public readonly available: boolean,
-        public readonly userId: string,
     ){}
 
     static create(object:{[key:string]: any}): [string?, CreateCategoryDto? ]{
 
-        const { name, available, userId } = object;
+        const { name, available,} = object;
         let availableBoolean = available;
 
-        if(name === undefined && available === undefined && userId === undefined){
+        if(name === undefined && available === undefined ){
             return ['No date provider'];
         }
 
         if(!(typeof name === 'string') && !name?.trim()) return ['Missing name'];
-        if(!(typeof userId === 'string') || !userId.trim()) return ['Missing userId']
         if(typeof available !== 'boolean'){
             if (available === 'true') {
                 availableBoolean = true;
@@ -35,7 +33,7 @@ export class CreateCategoryDto{
         }
 
 
-        return [undefined, new CreateCategoryDto(name, availableBoolean, userId)];
+        return [undefined, new CreateCategoryDto(name, availableBoolean)];
 
 
 

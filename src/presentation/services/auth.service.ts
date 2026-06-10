@@ -30,7 +30,7 @@ export class AuthService{
         // Valida primero, después TypeScript ya sabe que user no es null
         if (!user) throw CustomError.internalServer('Error creating user');
 
-        const token = await new GenerateTokenUseCase().execute(user.idValue);
+        const token = await new GenerateTokenUseCase().execute({id: user.idValue});
 
         await this.sendEmialValidation(user.emailValue);
 
@@ -49,7 +49,7 @@ export class AuthService{
 
         if(!user) throw CustomError.internalServer('Error login user');
 
-        const token = await new GenerateTokenUseCase().execute(user.idValue);
+        const token = await new GenerateTokenUseCase().execute({id: user.idValue});
 
         const {passwordValue, ...userEntity} = user;
 
@@ -76,7 +76,7 @@ export class AuthService{
     }
 
     private async sendEmialValidation(email: string){
-        const token = await new GenerateTokenUseCase().execute(email);
+        const token = await new GenerateTokenUseCase().execute({email: email});
         if(!token) throw CustomError.internalServer('Error generating token');
 
         const link = `${envs.WEBSERVICE_URL}/auth/validate-email/${token}`;

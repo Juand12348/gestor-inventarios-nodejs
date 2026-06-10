@@ -137,7 +137,8 @@ export class ProductEntity {
 
     static fromObject(object: {[key: string]: any;}){
     
-        const { id, _id,  name, description, price, stock, available,categoryId, createdAt, updatedAt } = object;
+        const { id, _id,  name, description, price, stock, available,createdAt, updatedAt } = object;
+        const categoryId = object.categoryId ?? object.category?.id;
     
         if(!_id && !id){
             throw CustomError.badRequest('Missing id');
@@ -148,7 +149,7 @@ export class ProductEntity {
         if(price === undefined) throw CustomError.badRequest('Missing price');
         if(stock === undefined) throw CustomError.badRequest('Missing stock');
         if(available === undefined) throw CustomError.badRequest('Missing available');
-        if(!categoryId) throw CustomError.badRequest('Missing categoryId');
+        if(categoryId === undefined) throw CustomError.badRequest('Missing categoryId');
         if(createdAt === undefined) throw CustomError.badRequest('Missing createdAt');
         if(updatedAt === undefined) throw CustomError.badRequest('Missing updatedAt');
 

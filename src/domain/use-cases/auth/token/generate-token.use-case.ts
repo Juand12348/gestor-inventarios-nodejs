@@ -6,7 +6,7 @@ export class GenerateTokenUseCase{
 
     constructor(){}
 
-    async execute(id: string){
+    async execute(id: object){
 
         const token = await JwtAdapter.generateToken(id);
         if(!token) throw CustomError.internalServer('Error generation token');

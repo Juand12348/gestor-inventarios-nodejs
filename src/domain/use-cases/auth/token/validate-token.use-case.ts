@@ -9,7 +9,7 @@ export class ValidateTokenUseCase{
 
     async execute(token: string){
         const payload = await JwtAdapter.validatedToken(token);
-        if(!token) throw CustomError.unauthorized('Invalid token');
+        if(!payload) throw CustomError.unauthorized('Invalid token');
 
         return payload;
     }

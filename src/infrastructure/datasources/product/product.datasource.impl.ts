@@ -1,5 +1,6 @@
 import { ProductModel } from "../../../data/models/product.model";
 import {
+    CustomError,
     ProductDatasource,
     ProductEntity,
 } from "../../../domain";
@@ -74,7 +75,10 @@ export class ProductDatasourceImpl implements ProductDatasource {
 
         const saved = await this.repository.save(model);
 
-        return ProductEntity.fromObject(saved);
+        const created = await this.getById(saved.id);
+        if(!created) throw CustomError.internalServer('Error creating product');
+
+        return created;
     }
 
     async update(

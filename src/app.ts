@@ -25,7 +25,6 @@ async function main() {
     } catch (error) {
 
         console.error('Database connection error');
-        console.error(error);
 
         process.exit(1);
 

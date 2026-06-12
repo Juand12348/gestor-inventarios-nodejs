@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
 import { MovementModel } from "../../../data/models/movement.model";
-import { MovementDatasource, MovementEntity, MovementType } from "../../../domain";
+import { CustomError, MovementDatasource, MovementEntity, MovementType } from "../../../domain";
 
 
 
@@ -10,7 +10,11 @@ export class MovementDatasourceImpl implements MovementDatasource{
 
     async getById(id: string): Promise<MovementEntity | null> {
         const movement = await this.repository.findOne({
-            where: {id}
+            where: {id},
+            relations: {
+                product: true,
+                user: true
+            }
         });
 
         if(!movement) return null;
@@ -19,10 +23,15 @@ export class MovementDatasourceImpl implements MovementDatasource{
     }
 
     async getAll(): Promise<MovementEntity[]> {
-        const movements = await this.repository.find();
+    const movements = await this.repository.find({
+        relations: {
+            product: true,
+            user: true,
+        }
+    });
 
-        return movements.map(movement => MovementEntity.fromObject(movement));
-    }
+    return movements.map(movement => MovementEntity.fromObject(movement));
+}
 
     async getByProductId(productId: string): Promise<MovementEntity[]> {
 
@@ -34,6 +43,10 @@ export class MovementDatasourceImpl implements MovementDatasource{
         },
         order: {
             date: 'DESC'
+        },
+        relations:{
+            product: true,
+            user: true
         }
     });
 
@@ -45,6 +58,10 @@ export class MovementDatasourceImpl implements MovementDatasource{
         const movements = await this.repository.find({
             where: {
                 type: type
+            },
+            relations: {
+                product: true,
+                user: true
             }
         });
 
@@ -59,13 +76,19 @@ async create(movement: MovementEntity): Promise<MovementEntity> {
         product: {
             id: movement.productIdValue
         } as any,
+        user: {
+            id: movement.userIdValue
+        } as any,
         quantity: movement.quantityValue,
         type: movement.typeValue
     });
 
     const saved = await this.repository.save(model);
 
-    return MovementEntity.fromObject(saved);
+    const created = await this.getById(saved.id);
+    if(!created) throw CustomError.internalServer('Error creating movement');
+
+    return created;
 }
 
 

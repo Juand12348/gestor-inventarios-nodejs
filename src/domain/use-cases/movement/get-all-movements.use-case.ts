@@ -9,7 +9,7 @@ export class GetAllMovementsUseCase{
 
     async execute(){
 
-        return this.repository.getAll();
+        return await this.repository.getAll();
 
     }
 

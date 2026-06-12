@@ -8,13 +8,12 @@ export class UpdateProductDto{
         public readonly stock?: number,
         public readonly available?: boolean,
         public readonly categoryId?: string,
-        public readonly userId?: string
     ){}
 
 
     static create(object:{[key: string]: any}):[string?, UpdateProductDto?]{
 
-        const { name, description, price, stock, available, categoryId , userId} = object;
+        const { name, description, price, stock, available, categoryId } = object;
         let availableBoolean;
 
         if(
@@ -23,8 +22,7 @@ export class UpdateProductDto{
             price === undefined &&
             stock === undefined &&
             available === undefined &&
-            categoryId === undefined && 
-            userId === undefined
+            categoryId === undefined
         ){
             return ['No data provider']
         }
@@ -48,11 +46,8 @@ export class UpdateProductDto{
             return ['Category invalid'];
         }
 
-        if(userId && !(typeof userId === 'string')&& !userId?.trim()){
-            return ['User inavlid'];
-        }
 
-        return [undefined, new UpdateProductDto(name, description, price, stock, availableBoolean, categoryId, userId)];
+        return [undefined, new UpdateProductDto(name, description, price, stock, availableBoolean, categoryId)];
 
 
     }

@@ -13,9 +13,9 @@ export class CreateMovementUseCase{
         private readonly userRepository: UserRepository,
     ){}
 
-    async execute(dto: CreateMovementDto){
+    async execute(userId: string,dto: CreateMovementDto){
 
-        const { productId, type, quantity, userId} = dto;
+        const { productId, type, quantity} = dto;
 
         const product = await this.productRepository.getById(productId);
         if(!product) throw CustomError.notFound(`Product with id: ${productId} not found`);

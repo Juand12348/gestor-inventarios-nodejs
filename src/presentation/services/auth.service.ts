@@ -79,7 +79,7 @@ export class AuthService{
         const token = await new GenerateTokenUseCase().execute({email: email});
         if(!token) throw CustomError.internalServer('Error generating token');
 
-        const link = `${envs.WEBSERVICE_URL}/auth/validate-email/${token}`;
+        const link = `${envs.WEBSERVICE_URL}auth/validate-email/${token}`;
 
         const html = `
             <h1>Validate your email</h1>

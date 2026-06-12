@@ -4,19 +4,17 @@ export class UpdateCategoryDto{
     private constructor(
         public readonly name?: string,
         public readonly available?: boolean,
-        public readonly userId?: string,
     ){}
 
     static create(object:{[key:string]: any}): [string?, UpdateCategoryDto? ]{
 
-        const { name, available, userId } = object;
+        const { name, available } = object;
         let availableBoolean = available;
 
 
          if (
             name === undefined &&
-            available === undefined &&
-            userId === undefined
+            available === undefined 
         ) {
             return ['No data provided'];
         }
@@ -40,12 +38,9 @@ export class UpdateCategoryDto{
             }
         }
 
-        if(!(typeof userId === 'string') && !userId?.trim()){
-            return ['User invalid'];
-        }
 
 
-        return [undefined, new UpdateCategoryDto(name, availableBoolean, userId)];
+        return [undefined, new UpdateCategoryDto(name, availableBoolean)];
 
 
 

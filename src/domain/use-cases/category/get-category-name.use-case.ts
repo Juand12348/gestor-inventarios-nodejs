@@ -10,7 +10,7 @@ export class GetCategoryNameUseCase{
 
     async execute(name: string){
 
-        const category = await this.repository.getById(name);
+        const category = await this.repository.getByName(name);
 
         if(!category) throw CustomError.notFound(`Category with name ${name} not exists`);
 

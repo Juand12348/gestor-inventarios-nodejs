@@ -6,22 +6,22 @@ export class UpdateUserDto {
     private constructor(
         public readonly name?: string,
         public readonly email?: string,
-        public readonly password?: string,
         public readonly available?: boolean
     ){}
 
-    static create(object: {name?: string, email?: string, password?: string, available?: boolean}):[string?, UpdateUserDto?]{
-
-        const { name, email, password, available} = object;
+    static create(object: {name?: string, email?: string, available?: boolean}):[string?, UpdateUserDto?]{
+        console.log('dto object:', object);
+        const { name, email, available} = object;
+        console.log('name:', name, 'email:', email, 'available:', available);
 
         if (
             name === undefined &&
             email === undefined &&
-            password === undefined &&
             available === undefined
         ) {
             return ['No data provided'];
         }
+        console.log('passed name validation');
 
         if( name !== undefined &&!name?.trim()) return ['Name not valid'];
         
@@ -30,16 +30,14 @@ export class UpdateUserDto {
             if(!regularExps.email.test(email)) return ['Email not valid'];
         }
 
-        if(password !== undefined){
-            if(!password?.trim()) return ['Password not valid'];
-            if(password.length < 6) return ['Password too short'];
-        }
+        
 
         if(available !== undefined && typeof available !== 'boolean'){
             return ['Available invalid'];
         }
+
         
-        return [undefined, new UpdateUserDto(name, email, password, available)];
+        return [undefined, new UpdateUserDto(name, email, available)];
 
     }
 

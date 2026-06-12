@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { ProductModel } from "./product.model";
 import { MovementType } from "../../domain";
+import { UserModel } from "./user.model";
 
 
 @Entity('movements')
@@ -25,6 +26,11 @@ export class MovementModel {
         enum: MovementType
     })
     type!: MovementType;
+
+    @ManyToOne(() => UserModel)
+    @JoinColumn({ name: 'user_id' })
+    user!: UserModel;
+
 
     @Column('integer')
     quantity!: number;

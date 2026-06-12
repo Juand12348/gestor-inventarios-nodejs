@@ -67,8 +67,10 @@ export class MovementEntity {
 
     static fromObject(object: {[key: string]: any;}){
     
-        const { id, _id, productId, type, quantity, userId,date } = object;
-    
+        const { id, _id, type, quantity,date } = object;
+        const productId = object.productId ?? object.product?.id;
+        const userId = object.userId ?? object.user?.id;
+
         if(!_id && !id){
             throw CustomError.badRequest('Missing id');
         }

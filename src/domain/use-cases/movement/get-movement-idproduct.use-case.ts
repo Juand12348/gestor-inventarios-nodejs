@@ -15,7 +15,7 @@ export class GetMovementProductIdUseCase{
         const product = await this.productRepository.getById(productId);
         if(!product) throw CustomError.notFound(`Product with id ${productId} not found`);
 
-        const movements = this.movementRepository.getByProductId(productId);
+        const movements = await this.movementRepository.getByProductId(productId);
 
         return movements;
 

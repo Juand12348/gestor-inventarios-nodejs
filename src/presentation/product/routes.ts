@@ -14,12 +14,12 @@ export class ProductRoutes{
         const authMiddleware = new AuthMiddleware();
 
 
-        router.use(authMiddleware.middleware)
+        router.use(authMiddleware.middleware);
         router.get('/', controller.getAll);
-        router.get('/:id', controller.getById);
         router.get('/name/:name', controller.getByName);
+        router.get('/:id', controller.getById);
         router.post('/', controller.create);
-        router.put('/', controller.update);
+        router.put('/:id', controller.update);
         router.patch('/:id/enable', controller.enable);
         router.patch('/:id/disable', controller.disable);
 

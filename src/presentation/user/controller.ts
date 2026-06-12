@@ -35,7 +35,7 @@ export class UserController{
 
 
     update = (req: Request, res: Response) => {
-        const id = req.params.id as string;
+        const id = (req as any).user.id;
         if (!id) return res.status(400).json({ error: 'Id is required' });
         const [error, updateUserDto] = UpdateUserDto.create(req.body);
         if(error) return res.status(400).json({error});

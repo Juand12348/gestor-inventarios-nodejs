@@ -33,12 +33,12 @@ export class MovementController{
 
     
     create = (req: Request, res: Response) => {
-
+        const userId = (req as any).user.id;
 
         const [error, createMovementDto] = CreateMovementDto.create(req.body);
         if(error) return res.status(400).json({error})
 
-        this.movementService.create(createMovementDto!)
+        this.movementService.create(userId ,createMovementDto!)
             .then(movement => res.status(201).json(movement))
             .catch(error => this.handleError(error, res));
 
@@ -48,7 +48,7 @@ export class MovementController{
 
     getByProductId = (req: Request, res: Response) =>{
 
-        const productId = req.params.id as string;
+        const productId = req.params.productId as string;
         if(!productId) return res.status(400).json({error: 'Product id is required'});
 
         this.movementService.getByProductId(productId)

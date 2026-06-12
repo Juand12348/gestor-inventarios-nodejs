@@ -39,9 +39,9 @@ export class MovementService{
     }
 
 
-    async create(dto: CreateMovementDto){
+    async create(userId: string,dto: CreateMovementDto){
         const create = new CreateMovementUseCase(this.movementRepository, this.productRepository, this.userRepository);
-        return await create.execute(dto);
+        return await create.execute(userId ,dto);
     }
 
     async getByProductId(id: string){

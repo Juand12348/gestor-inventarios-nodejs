@@ -71,7 +71,20 @@ export class UserService{
     
             const user = await new validateEmailUseCase(this.userRepository).execute(email);
     
-            return user;
+            if(!user) throw CustomError.notFound('User not exists');
+
+            const objectUser = {
+                id: user.idValue, 
+                name: user.nameValue,
+                email: user.emailValue,
+                emailValidated: user.emailValidatedValue,
+                role: user.roleValue,
+                available: user.availableValue
+            };
+
+            return {
+            user: objectUser,
+        };
     
         }
 
@@ -83,8 +96,20 @@ export class UserService{
             if(!email) throw CustomError.internalServer('Email not in token');
             
             const user = await new ResetPasswordUseCase(this.userRepository).execute(email, dto);
+            if(!user) throw CustomError.notFound('User not exists');
 
-            return user;
+            const objectUser = {
+                id: user.idValue, 
+                name: user.nameValue,
+                email: user.emailValue,
+                emailValidated: user.emailValidatedValue,
+                role: user.roleValue,
+                available: user.availableValue
+            };
+
+            return {
+            user: objectUser,
+        };
         }
 
         async forgotPassword(dto: ForgotPasswordDto){

@@ -50,11 +50,9 @@ export class EmailService {
         attachments: attachments,
       });
 
-      // console.log( sentInformation );
 
       return true;
     } catch ( error ) {
-        console.log(error);
       return false;
     }
 

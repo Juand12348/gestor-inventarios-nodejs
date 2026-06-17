@@ -10,10 +10,8 @@ export class UpdateUserDto {
     ){}
 
     static create(object: {name?: string, email?: string, available?: boolean}):[string?, UpdateUserDto?]{
-        console.log('dto object:', object);
-        const { name, email, available} = object;
-        console.log('name:', name, 'email:', email, 'available:', available);
 
+        const { name, email, available} = object;
         if (
             name === undefined &&
             email === undefined &&

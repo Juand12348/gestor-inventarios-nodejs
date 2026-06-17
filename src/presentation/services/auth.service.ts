@@ -86,8 +86,20 @@ export class AuthService{
         if(!email) throw CustomError.internalServer('Email not in token');
 
         const user = await new validateEmailUseCase(this.userRepository).execute(email);
+        if(!user) throw CustomError.notFound('User not exists');
 
-        return user;
+        const objectUser = {
+                id: user.idValue, 
+                name: user.nameValue,
+                email: user.emailValue,
+                emailValidated: user.emailValidatedValue,
+                role: user.roleValue,
+                available: user.availableValue
+            };
+
+            return {
+            user: objectUser,
+        };
 
     }
 

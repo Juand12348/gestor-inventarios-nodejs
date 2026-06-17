@@ -16,7 +16,7 @@ export class ProductController{
     }
 
     getAll = (req: Request, res: Response) => {
-        
+
         this.productService.getAll()
             .then(products => res.json(products))
             .catch(error => this.handleError(error, res));

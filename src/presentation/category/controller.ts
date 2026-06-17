@@ -8,7 +8,6 @@ export class CategoryController{
     constructor(private readonly categoryService: CategoryService){}
 
     private handleError = (error: unknown, res: Response) => {
-        console.log(error);
         if(error instanceof CustomError){
             return res.status(error.statusCode).json({error: error.message});
         }

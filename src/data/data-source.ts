@@ -1,19 +1,17 @@
 import 'reflect-metadata';
 import { DataSource } from 'typeorm';
-import { envs } from '../config';
+
 import { UserModel } from './models/user.model';
 import { ProductModel } from './models/product.model';
 import { CategoryModel } from './models/category.model';
 import { MovementModel } from './models/movement.model';
+import { envs } from '../config';
 
 
 export const AppDataSource = new DataSource({
     type: "postgres",
-    host: envs.DB_HOST,
-    port: envs.DB_PORT,
-    username: envs.DB_USERNAME,
-    password: envs.DB_PASSWORD,
-    database: envs.DB_DATABASE,
+    url: envs.DATABASE_URL,
+    ssl: true,
     synchronize: false,
     logging: true,
     entities: [
@@ -23,6 +21,6 @@ export const AppDataSource = new DataSource({
         MovementModel
     ],
     subscribers: [],
-    migrations: [],
+    migrations: ['src/data/migrations/*.ts'],
 })
 

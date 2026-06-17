@@ -21,9 +21,11 @@ export class UserRoutes{
         const controller = new UserController(service);
         const authMiddleware = new AuthMiddleware();
 
-        router.get('/:id', controller.getById);
         router.get('/email/:email', controller.getByEmail);
+        router.get('/:id', controller.getById);
         router.put('/', authMiddleware.middleware,controller.update);
+        router.put('/reset-password/:token', controller.resetPassword);
+        router.post('/forgot-password', controller.forgotPassword);
         router.patch('/:id/enable', controller.enable);
         router.patch('/:id/disable', controller.disable);
 

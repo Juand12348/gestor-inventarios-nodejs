@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { ProductService } from "../services/product.service";
 import { CreateProductDto, CustomError, UpdateProductDto, UpdateUserDto } from "../../domain";
 import { UserService } from "../services/user.service";
+import { ForgotPasswordDto } from "../../domain/dtos/auth/forgot-password.dto";
+import { ResetPasswordDto } from "../../domain/dtos/auth/reset-password.dto";
 
 
 export class UserController{
@@ -59,6 +61,27 @@ export class UserController{
         this.userService.disable(id)
             .then(user => res.json(user))
             .catch(error => this.handleError(error, res));
+    }
+
+    forgotPassword = ( req: Request, res: Response) => {
+        const [error, forgotPasswordDto] = ForgotPasswordDto.create(req.body);
+        if(error) return res.status(400).json({error});
+
+        this.userService.forgotPassword(forgotPasswordDto!)
+        .then(user => res.json(user))
+        .catch(error => this.handleError(error, res));
+
+    }
+
+    resetPassword = (req: Request, res: Response) => {
+        const token = req.params.token as string;
+        const [error, resetPasswordDto] = ResetPasswordDto.create(req.body); 
+        if(error) return res.status(400).json(error);
+
+        this.userService.resetPassword(token, resetPasswordDto!)
+        .then((user) => res.json(user))
+        .catch(error => this.handleError(error, res));
+
     }
 
 

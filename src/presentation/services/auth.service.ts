@@ -34,10 +34,17 @@ export class AuthService{
 
         await this.sendEmialValidation(user.emailValue);
 
-        const { passwordValue, ...userEntity } = user;
+        const objectUser = {
+                id: user.idValue, 
+                name: user.nameValue,
+                email: user.emailValue,
+                emailValidated: user.emailValidatedValue,
+                role: user.roleValue,
+                available: user.availableValue
+            };
 
-        return {
-            user: userEntity,
+            return {
+            user: objectUser,
             token
         };
     }
@@ -51,12 +58,21 @@ export class AuthService{
 
         const token = await new GenerateTokenUseCase().execute({id: user.idValue});
 
-        const {passwordValue, ...userEntity} = user;
+        const objectUser = {
+                id: user.idValue, 
+                name: user.nameValue,
+                email: user.emailValue,
+                emailValidated: user.emailValidatedValue,
+                role: user.roleValue,
+                available: user.availableValue
+            };
 
-        return {
-            user: userEntity,
+            return {
+            user: objectUser,
             token
-        }
+        };
+
+        
 
 
     }

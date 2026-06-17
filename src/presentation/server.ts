@@ -1,5 +1,6 @@
 import express,{ Router } from "express";
 import compression from 'compression';
+import cors from 'cors';
 
 
 interface Options{
@@ -28,6 +29,9 @@ export class Server{
         this.app.use(express.json());
         this.app.use(express.urlencoded({extended: true}));
         this.app.use(compression());
+        this.app.use(cors({
+        origin: 'http://localhost:5173', // tu frontend
+        }));
 
         // Routes
         this.app.use(this.routes);
